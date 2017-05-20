@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+  ServerName easy-test
+
+  ErrorLog logs/easy-test-error.log
+  CustomLog logs/easy-test-access.log common
+  ProxyTimeout 600
+
+  <Location / >
+    ProxyPass ajp://localhost:20001/
+    ProxyPassReverse ajp://localhost:20001/
+  </Location>
+</VirtualHost>

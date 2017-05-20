@@ -1,0 +1,11 @@
+[Unit]
+Description=EASY Test Service
+
+[Service]
+ExecStart=/usr/local/easy-test/bin/easy-test-service-start
+
+User=easy-test
+Group=easy-test
+
+[Install]
+WantedBy=multi-user.target
