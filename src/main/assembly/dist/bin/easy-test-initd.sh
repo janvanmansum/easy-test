@@ -11,24 +11,29 @@
 
 NAME="easy-test"
 EXEC="/usr/bin/jsvc"
-APPHOME="/usr/local/easy-test"
+APPHOME="/opt/dans.knaw.nl/$NAME"
 JAVA_HOME="/usr/lib/jvm/jre"
 CLASSPATH="$APPHOME/bin/$NAME.jar:`echo $APPHOME/lib/*.jar | sed 's/ /:/g'`"
 CLASS="nl.knaw.dans.easy.test.ServiceStarter"
 ARGS=""
-USER="easy-test"
+USER="$NAME"
 PID="/var/run/$NAME.pid"
-OUTFILE="/var/log/$NAME/$NAME.out"
-ERRFILE="/var/log/$NAME/$NAME.err"
+OUTFILE="/var/opt/dans.knaw.nl/log/$NAME/$NAME.out"
+ERRFILE="/var/opt/dans.knaw.nl/log/$NAME/$NAME.err"
 WAIT_TIME=60
 
 jsvc_exec()
 {
     cd ${APPHOME}
+    LOGBACK_CFG=/etc/opt/dans.knaw.nl/$NAME/logback-service.xml
+    if [ ! -f $LOGBACK_CFG ]; then
+        LOGBACK_CFG=$APPHOME/cfg/logback-service.xml
+    fi
+
     LC_ALL=en_US.UTF-8 \
     ${EXEC} -home ${JAVA_HOME} -cp ${CLASSPATH} -user ${USER} -outfile ${OUTFILE} -errfile ${ERRFILE} -pidfile ${PID} -wait ${WAIT_TIME} \
-          -Dapp.home=${APPHOME} -Dconfig.file=${APPHOME}/cfg/application.conf \
-          -Dlogback.configurationFile=${APPHOME}/cfg/logback-service.xml $1 ${CLASS} ${ARGS}
+          -Dapp.home=${APPHOME} \
+          -Dlogback.configurationFile=$LOGBACK_CFG $1 ${CLASS} ${ARGS}
 }
 
 start_jsvc_exec()

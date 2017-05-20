@@ -28,7 +28,7 @@ class DebugConfigSpec extends FlatSpec with Matchers {
     val filesInDebugConfig = resource.managed(Files.list(Paths.get("src/test/resources/debug-config"))).acquireAndGet(_.iterator().asScala.toSet)
     val filesInDistCfg = resource.managed(Files.list(Paths.get("src/main/assembly/dist/cfg"))).acquireAndGet(_.iterator().asScala.toSet)
 
-    filesInDebugConfig.map(_.getFileName) shouldBe filesInDistCfg.map(_.getFileName)
+    filesInDebugConfig.map(_.getFileName) shouldBe filesInDistCfg.map(_.getFileName).filterNot(_.getFileName.toString == "version")
   }
 
   it should "contain an application.properties with the same keys as the one in src/main/assembly/dist/cfg" in {
