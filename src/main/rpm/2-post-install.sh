@@ -41,6 +41,7 @@ fi
 if [ ! -d $LOG_DIR ]; then
     echo -n "Creating directory for logging... "
     mkdir -p $LOG_DIR
+    chown $MODULE_USER $LOG_DIR
     echo "OK"
 fi
 
