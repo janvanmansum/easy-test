@@ -16,16 +16,18 @@
 
 - hosts: "test"
   become: yes
-  vars:
-    force_reinstalls: yes
   tasks:
   - name: Install standard software
     yum: name="{{ item }}"
     with_items:
-      - java-1.8.0-openjdk
       - httpd
       - libselinux-python
       - libsemanage-python
+
+  - name: Enable SELinux
+    selinux:
+       policy: targeted
+       state: enforcing
 
   - name: Enable Apache HTTP Server
     service: name=httpd enabled=true state=started

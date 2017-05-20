@@ -2,7 +2,7 @@
 Description=EASY Test Service
 
 [Service]
-ExecStart=/usr/local/easy-test/bin/easy-test-service-start
+ExecStart=/opt/dans.knaw.nl/easy-test/bin/easy-test-service-start
 
 User=easy-test
 Group=easy-test

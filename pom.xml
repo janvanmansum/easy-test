@@ -147,7 +147,8 @@
                 <artifactId>rpm-maven-plugin</artifactId>
                 <configuration combine.children="append">
                     <group>Applications/Archiving</group>
-                    <requires combine.children="append">
+                    <requires>
+                        <require>java-1.8.0-openjdk</require>
                         <require>jsvc</require>
                     </requires>
                 </configuration>
